@@ -2,8 +2,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Small project to practice React.
 
-### `npm i`
-### `npm start`
+```bash
+$ npm i
+$ npm start
+```
 
 ### Useful links:
 
