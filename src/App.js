@@ -1,22 +1,6 @@
 import React from 'react';
 import './App.css';
 
-const welcome = {
-  greeting: 'Hola',
-  title: 'React',
-};
-
-function getTitle(title) {
-  return title;
-}
-
-const developers = [
-  { name: 'Ivan', hobby: 'Futbol' },
-  { name: 'Sonia', hobby: 'Dance' },
-  { name: 'Paul', hobby: 'Running' },
-  { name: 'Kailey', hobby: 'Stories' },
-];
-
 const list = [
   {
     title: 'React',
@@ -54,17 +38,12 @@ const list = [
 
 const App = () => (
   <div>
-    <h1>{ welcome.greeting } { welcome.title }</h1>
-    <h2>{ getTitle('Yo!') }</h2>
-    <h3>Developers:</h3>
-    <ul>
-      { developers.map(developer => <li>{developer.name} - Hobby: {developer.hobby}</li>) }
-    </ul>
-
     <h1>My Hacker Stories</h1>
+
     <hr />
     <label htmlFor="search">Search: </label>
     <input id="search" type="text" />
+
     <List />
     <hr />
   </div>
