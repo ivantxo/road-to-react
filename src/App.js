@@ -37,10 +37,10 @@ const App = () => {
     },
   ];
 
-  const [searchTerm, setSearchTerm] = React.useState('');
-  
-  const handleChange = event => {
-    setSearchTerm(event.target.value);
+  // A) A callback gets introduced
+  const handleSearch = event => {
+    // C) "Calls back" to the place it was introduced
+    console.log(event.target.value);
   };
 
   return (
@@ -48,17 +48,32 @@ const App = () => {
       <h1>My Hacker Stories</h1>
 
       <hr />
-      <label htmlFor="search">Search: </label>
-      <input id="search" type="text" onChange={handleChange} />
-
-      <p>
-        Searching for <strong>{searchTerm}</strong>.
-      </p>
+      <Search onSearch={handleSearch} />
 
       <List list={stories} />
       <hr />
     </div>
   )
+}
+
+const Search = props => {
+  const [searchTerm, setSearchTerm] = React.useState('');
+
+  const handleChange = event => {
+    setSearchTerm(event.target.value);
+    // B) The callback gets used elsewhere
+    props.onSearch(event);
+  };
+
+  return (
+    <div>
+      <label htmlFor="search">Search: </label>
+      <input id="search" type="text" onChange={handleChange} />
+      <p>
+        Searching for <strong>{searchTerm}</strong>.
+      </p>
+    </div>
+  );
 }
 
 const List = props =>
