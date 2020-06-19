@@ -41,11 +41,14 @@ const App = () => {
     localStorage.getItem('search') || 'React'
   );
 
+  React.useEffect(() => {
+    localStorage.setItem('search', searchTerm);
+  }, [searchTerm]);
+
   // A) A callback gets introduced
   const handleSearch = event => {
     // C) "Calls back" to the place it was introduced
     setSearchTerm(event.target.value);
-    localStorage.setItem('search', event.target.value);
   };
 
   const searchedStories = stories.filter(story => {
