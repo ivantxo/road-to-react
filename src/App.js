@@ -37,12 +37,15 @@ const App = () => {
     },
   ];
 
-  const [searchTerm, setSearchTerm] = React.useState('');
+  const [searchTerm, setSearchTerm] = React.useState(
+    localStorage.getItem('search') || 'React'
+  );
 
   // A) A callback gets introduced
   const handleSearch = event => {
     // C) "Calls back" to the place it was introduced
     setSearchTerm(event.target.value);
+    localStorage.setItem('search', event.target.value);
   };
 
   const searchedStories = stories.filter(story => {
