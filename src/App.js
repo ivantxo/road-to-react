@@ -143,24 +143,19 @@ const List = ({ list, onRemoveItem }) =>
     />
   ));
 
-const Item = ({ item, onRemoveItem }) => {
-  function handleRemoveItem() {
-    onRemoveItem(item);
-  };
-  return (
-    <div>
-      <span>
-        <a href={ item.url }>{ item.title }</a>&nbsp;-&nbsp; 
-      </span>
-      <span>{ item.author }&nbsp;-&nbsp; </span>
-      <span>{ item.num_comments }&nbsp;-&nbsp;</span>
-      <span>{ item.points } - &nbsp;&nbsp;</span>
-      <span>
-        <button type="button" onClick={ handleRemoveItem }>
-          Dismiss
-        </button>
-      </span>
-    </div>
-  );
-};
+const Item = ({ item, onRemoveItem }) => (
+  <div>
+    <span>
+      <a href={ item.url }>{ item.title }</a>&nbsp;-&nbsp; 
+    </span>
+    <span>{ item.author }&nbsp;-&nbsp; </span>
+    <span>{ item.num_comments }&nbsp;-&nbsp;</span>
+    <span>{ item.points } - &nbsp;&nbsp;</span>
+    <span>
+      <button type="button" onClick={ () => onRemoveItem(item) }>
+        Dismiss
+      </button>
+    </span>
+  </div>
+);
 export default App;
