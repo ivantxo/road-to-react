@@ -53,6 +53,13 @@ const App = () => {
 
   const [stories, setStories] = React.useState(initialStories);
 
+  const handleRemoveStory = item => {
+    const newStories = stories.filter(
+      story => item.objectID !== story.objectID
+    );
+    setStories(newStories);
+  };
+
   // A) A callback gets introduced
   const handleSearch = event => {
     // C) "Calls back" to the place it was introduced
@@ -72,13 +79,13 @@ const App = () => {
       <hr />
       <InputWithLabel
         id="search"
-        value={searchTerm}
-        onInputChange={handleSearch}
+        value={ searchTerm }
+        onInputChange={ handleSearch }
       >
         <strong>Search:</strong>
       </InputWithLabel>
 
-      <List list={searchedStories} />
+      <List list={ searchedStories } onRemoveItem={ handleRemoveStory } />
       <hr />
     </div>
   )
@@ -127,18 +134,33 @@ const InputWithLabel = ({ id, value, type = 'text', onInputChange, children }) =
 //   </div>
 // );
 
-const List = ({ list }) =>
-  list.map(item => <Item key={item.objectID} item={item} />);
+const List = ({ list, onRemoveItem }) =>
+  list.map(item => (
+    <Item 
+      key={ item.objectID } 
+      item={ item } 
+      onRemoveItem={ onRemoveItem }
+    />
+  ));
 
-const Item = ({ item }) => (
-  <div>
-    <span>
-      <a href={ item.url }>{ item.title }</a>
-    </span>
-    <span>{ item.author }</span>
-    <span>{ item.num_comments }</span>
-    <span>{ item.points }</span>
-  </div>
-);
-
+const Item = ({ item, onRemoveItem }) => {
+  function handleRemoveItem() {
+    onRemoveItem(item);
+  };
+  return (
+    <div>
+      <span>
+        <a href={ item.url }>{ item.title }</a>&nbsp;-&nbsp; 
+      </span>
+      <span>{ item.author }&nbsp;-&nbsp; </span>
+      <span>{ item.num_comments }&nbsp;-&nbsp;</span>
+      <span>{ item.points } - &nbsp;&nbsp;</span>
+      <span>
+        <button type="button" onClick={ handleRemoveItem }>
+          Dismiss
+        </button>
+      </span>
+    </div>
+  );
+};
 export default App;
