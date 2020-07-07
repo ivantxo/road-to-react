@@ -91,12 +91,12 @@ const App = () => {
     handleFetchStories(); // C
   }, [handleFetchStories]); // D
 
-  const handleRemoveStory = item => {
+  const handleRemoveStory = React.useCallback(item => {
     dispatchStories({
       type: 'REMOVE_STORY',
       payload: item,
     });
-  };
+  }, []);
 
   // A) A callback gets introduced
   const handleSearchInput = event => {
@@ -108,6 +108,8 @@ const App = () => {
     setUrl(`${API_ENDPOINT}${searchTerm}`);
     event.preventDefault();
   };
+
+  // console.log('B:App');
 
   return (
     <div className="container">
@@ -174,14 +176,17 @@ const InputWithLabel = ({ id, value, type = 'text', onInputChange, children }) =
   </>
 );
 
-const List = ({ list, onRemoveItem }) =>
+const List = React.memo(
+  ({ list, onRemoveItem }) =>
+  // console.log('B:List') || 
   list.map(item => (
     <Item 
       key={ item.objectID } 
       item={ item } 
       onRemoveItem={ onRemoveItem }
     />
-  ));
+  ))
+);
 
 const Item = ({ item, onRemoveItem }) => (
   <div className="item">
