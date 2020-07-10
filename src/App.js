@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { sortBy } from 'lodash';
 import './App.css';
 
 const API_ENDPOINT = 'https://hn.algolia.com/api/v1/search?query=';
@@ -176,20 +177,83 @@ const InputWithLabel = ({ id, value, type = 'text', onInputChange, children }) =
   </>
 );
 
+const SORTS = {
+  NONE: list => list,
+  TITLE: list => sortBy(list, 'title'),
+  AUTHOR: list => sortBy(list, 'author'),
+  COMMENT: list => sortBy(list, 'num_comments'),
+  POINT: list => sortBy(list, 'points'),
+};
+
 const List = React.memo(
-  ({ list, onRemoveItem }) =>
-  // console.log('B:List') || 
-  list.map(item => (
-    <Item 
-      key={ item.objectID } 
-      item={ item } 
-      onRemoveItem={ onRemoveItem }
-    />
-  ))
+  ({ list, onRemoveItem }) => {
+    const [sort, setSort] = React.useState('NONE');
+
+    const handleSort = (sortKey) => {
+      setSort(sortKey);
+    };
+
+    const sortFunction = SORTS[sort];
+    const sortedList = sortFunction(list);
+
+    return (
+      <div>
+        <SortingControls onSort={handleSort} />
+        {sortedList.map(item => (
+          <Item 
+            key={ item.objectID } 
+            item={ item } 
+            onRemoveItem={ onRemoveItem }
+          />
+        ))}
+      </div>
+    );
+  }
+);
+
+const SortingControls = ({ onSort }) => (
+  <div style={{ display: 'flex' }}>
+    <span style={{ width: '40%' }}>
+      <button 
+        type="button" 
+        className="button button_small"
+        onClick={() => onSort('TITLE')}
+      >
+        Title&#8661;
+      </button>
+    </span>
+    <span style={{ width: '30%' }}>
+      <button 
+        type="button" 
+        className="button button_small"
+        onClick={() => onSort('AUTHOR')}
+      >
+          Author&#8661;
+        </button>
+    </span>
+    <span style={{ width: '10%' }}>
+      <button 
+        type="button" 
+        className="button button_small"
+        onClick={() => onSort('COMMENT')}
+      >
+        Comments&#8661;
+      </button>
+    </span>
+    <span style={{ width: '10%' }}>
+      <button 
+        type="button" 
+        className="button button_small"
+        onClick={() => onSort('POINT')}
+      >
+        Points&#8661;
+      </button>
+    </span>
+  </div>
 );
 
 const Item = ({ item, onRemoveItem }) => (
-  <div className="item">
+  <div style={{ display: 'flex' }}>
     <span style={{ width: '40%' }}>
       <a href={ item.url }>{ item.title }</a>
     </span>
