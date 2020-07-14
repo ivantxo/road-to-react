@@ -179,17 +179,19 @@ const App = () => {
 }
 
 const LastSearches = ({ lastSearches, onLastSearch }) => (
-  <>
+  <div style={{ display: 'flex', marginBottom: '10px' }}>
     {lastSearches.map((searchTerm, index) => (
       <button
         key={searchTerm + index}
         type="button"
         onClick={() => onLastSearch(searchTerm)}
+        className="button button_small"
+        style={{ marginRight: '10px' }}
       >
         {searchTerm}
       </button>
     ))}
-  </>
+  </div>
 );
 
 const SearchForm = ({
@@ -271,7 +273,7 @@ const List = React.memo(
 );
 
 const SortingControls = ({ onSort }) => (
-  <div style={{ display: 'flex' }}>
+  <div style={{ display: 'flex', marginBottom: '10px' }}>
     <span style={{ width: '40%' }}>
       <button 
         type="button" 
@@ -312,7 +314,7 @@ const SortingControls = ({ onSort }) => (
 );
 
 const Item = ({ item, onRemoveItem }) => (
-  <div style={{ display: 'flex' }}>
+  <div style={{ display: 'flex', marginBottom: '10px' }}>
     <span style={{ width: '40%' }}>
       <a href={ item.url }>{ item.title }</a>
     </span>
